@@ -29,9 +29,13 @@ router.get('/reset', async (req, res) => {
             }
         );
 
-        // if (Table.listCollections().toArray().includes(collection)) {
-        //     await Table.collection(collection).drop();
-        // }
+         const tables = await Table.find();
+
+        if (tables) {
+            for (const table of tables) {
+                await Table.remove({ _id: table._id });
+            }
+        }
 
     } catch (error) {
         res.json({
